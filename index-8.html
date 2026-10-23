@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>عربی ۱ پایهٔ دهم فنی‌وحرفه‌ای و کاردانش — آموزش تعاملی</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#001954">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="عربی دهم">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#14283a;--bg:#f2f5f8;--card:#fff;--lap:#1d4f91;--gold:#9a6f10;--ok:#1f7a5c;--bad:#b3392f;--line:#d8e0e8;--soft:#e8eff7}
+@media (prefers-color-scheme:dark){:root{--ink:#e6edf3;--bg:#0f1a24;--card:#17252f;--lap:#7db1f0;--gold:#e0b04a;--ok:#4cc29a;--bad:#f08075;--line:#2a3b49;--soft:#1f3040}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.9 Vazirmatn,Tahoma,sans-serif;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.ar{font-family:Amiri,'Noto Naskh Arabic','Traditional Arabic',serif;font-size:1.4rem;line-height:2.3;direction:rtl}
+header{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line)}
+.hrow{display:flex;align-items:center;max-width:960px;margin:auto}
+nav{display:flex;gap:4px;overflow-x:auto;padding:8px 10px;flex:1;min-width:0}
+nav button{flex:none;border:0;background:none;color:var(--ink);font:inherit;font-size:.92rem;padding:4px 12px;border-radius:8px;cursor:pointer}
+nav button.on{background:var(--lap);color:#fff}
+#inst{flex:none;margin:0 6px;font-size:.85rem;padding:2px 12px}
+.wrap{max-width:900px;margin:auto;padding:12px 14px 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
+h1{font-size:1.6rem;margin:.3em 0}h2{font-size:1.2rem;margin:.2em 0 .4em;color:var(--lap)}h3{font-size:1.02rem;margin:.6em 0 .2em}
+.hero{padding:28px 10px;text-align:center}.hero .ar{font-size:2.4rem;color:var(--gold);margin:0}
+.muted{color:var(--ink);opacity:.7;font-size:.9rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.tile{display:block;width:100%;text-align:right;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--ink);font:inherit;cursor:pointer}
+.tile:hover{border-color:var(--lap)}.tile b{display:block}
+.btn{border:1px solid var(--lap);background:var(--lap);color:#fff;font:inherit;border-radius:8px;padding:4px 16px;cursor:pointer}
+.btn.alt{background:none;color:var(--lap)}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:right;white-space:nowrap}th{background:var(--soft)}
+td.ar,th.ar{font-size:1.25rem;line-height:1.9}
+input[type=text],input[type=search],input:not([type]){font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);width:100%;max-width:320px}
+.opt{display:block;width:100%;text-align:right;margin:6px 0;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 18%,var(--card))}
+.opt.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 18%,var(--card))}
+.fc{min-height:150px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:1.3rem;cursor:pointer;border:2px solid var(--lap);border-radius:12px;padding:14px}
+.fc .ar{font-size:2rem}
+.bar{height:8px;background:var(--soft);border-radius:4px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ok)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+details{margin:6px 0}summary{cursor:pointer;color:var(--lap)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header><div class="hrow"><nav id="nav"></nav><button class="btn" id="inst" hidden>نصب برنامه</button></div></header>
+<main class="wrap" id="app"></main>
+<script>
+(function(){
+"use strict";
+var $=function(s){return document.querySelector(s)};
+var fa=function(n){return String(n).replace(/\d/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d]})};
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+var store={get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* ---------- داده‌ها ---------- */
+var L=[
+{t:'كَدُّ الْيَدِ',f:'دسترنج',q:'حِرْفَةُ الْمَرْءِ كَنْزٌ',qf:'پیشهٔ انسان گنج است. (امام علی ع)',
+ text:['يَشْعُرُ ناصِرٌ الْيَوْمَ بِالتَّعَبِ كَثيراً. فَهُوَ سائِقُ سَيّارَةِ أُجْرَةٍ وَ يَكْسِبُ مَصاريفَ حَياتِهِ عَنْ طَريقِ نَقْلِ الْمُسافِرينَ. وَ قَدْ حَصَلَ عَلى مالٍ جَيِّدٍ وَ لكِنَّهُ شَعَرَ بِالتَّعَبِ.','قالَ رَسولُ اللّهِ (ص): «إِنَّ اللّهَ يُحِبُّ الَّذينَ يَعْمَلونَ وَ يَنْفَعونَ الْآخَرينَ وَ هُمْ في طَلَبِ الرِّزْقِ الْحَلالِ.»','«مَنْ أَكَلَ مِنْ كَدِّ يَدِهِ نَظَرَ اللّهُ إِلَيْهِ بِالرَّحْمَةِ، ثُمَّ لا يُعَذِّبُهُ أَبَداً.»'],
+ tr:'ناصر امروز بسیار خسته است. او راننده تاکسی است و هزینهٔ زندگی‌اش را با جابه‌جایی مسافران درمی‌آورد. درآمد خوبی داشته اما احساس خستگی کرده است. پیامبر (ص) فرمود: خداوند کسانی را دوست دارد که کار می‌کنند و به دیگران سود می‌رسانند، در حالی که در پی روزی حلال‌اند؛ و هر کس از دسترنج خود بخورد، خدا با رحمت به او می‌نگرد و هرگز عذابش نمی‌کند.',
+ g:'<b>مرور آموخته‌های قبل:</b> جدول ۱۴ صیغه (ضمیر، ماضی، مضارع، امر، نهی). برای تمرین با هر ریشهٔ دلخواه، به تب «صرف» بروید. «تَرْجِمْ» یعنی «ترجمه کن».'},
+{t:'يَدُ الْفَلّاحِ',f:'دست کشاورز',q:'اِزْرَعوا وَ اغْرِسوا … وَ اللّهِ ما عَمِلَ النّاسُ عَمَلاً أَحَلَّ وَ لا أَطْيَبَ مِنْهُ',qf:'کشاورزی کنید و نهال بکارید … به خدا سوگند مردم کاری حلال‌تر و بهتر از آن انجام نداده‌اند. (امام صادق ع)',
+ text:['تُوجَدُ قِصَصٌ كَثيرَةٌ في تاريخِ الْإِسْلامِ تُبَيِّنُ قيمَةَ الْعَمَلِ؛ مِنْها: كانَ النَّبِيُّ (ص) جالِساً مَعَ خَمْسَةٍ مِنْ أَصْحابِهِ تَحْتَ شَجَرَةٍ؛ فَدَخَلَ عَلَيْهِمْ رَجُلٌ ذو وَجْهٍ أَسْمَرَ وَ يَدَيْنِ خَشِنَتَيْنِ؛ فَفَهِمَ الْحاضِرونَ مِنْ ظاهِرِهِ أَنَّهُ فَلّاحٌ وَ مِهْنَتُهُ الزِّراعَةُ.','فَضَحِكَ أَحَدٌ مِنَ الْحاضِرينَ وَ أَرادَ أَنْ يَسْتَهْزِئَ بِهِ؛ وَ لكِنَّ النَّبِيَّ (ص) عِنْدَما شاهَدَهُ رَحَّبَ بِهِ وَ أَجْلَسَهُ إِلى جانِبِهِ. ثُمَّ تَعَجَّبوا كَثيراً حينَما أَخَذَ رَسولُ اللّهِ يَدَ الْفَلّاحِ بِيَدِهِ وَ قالَ: «إِنَّها يَدٌ يُحِبُّها اللّهُ وَ رَسولُهُ».','رَحِمَ اللّهُ امْرَأً عَمِلَ عَمَلاً فَأَتْقَنَهُ. (رَسولُ اللّهِ) — آفَةُ النُّجْحِ الْكَسَلُ. (الْإِمامُ عَلِيٌّ)'],
+ tr:'در تاریخ اسلام داستان‌های بسیاری ارزش کار را نشان می‌دهد. پیامبر با پنج یاران زیر درختی نشسته بود که مردی گندمگون با دو دست زبر وارد شد. حاضران از ظاهرش فهمیدند کشاورز است. یکی خندید و خواست او را مسخره کند، اما پیامبر به او خوشامد گفت و کنارش نشاند و سپس دست او را در دست گرفت و فرمود: «این دستی است که خدا و رسولش دوستش دارند». همچنین: خدا رحمت کند کسی را که کاری را انجام دهد و آن را درست و استوار انجام دهد. / آفتِ موفقیت، تنبلی است.',
+ g:'<b>اعداد اصلی ۱ تا ۱۰۰ و ترتیبی ۱ تا ۲۰</b> در این درس آموزش داده می‌شود. مطابقت عدد و معدود جزء اهداف کتاب نیست. ابزار تبدیل عدد در تب «اعداد» است.'},
+{t:'قيمَةُ الْعَمَلِ',f:'ارزش کار',q:'إِنَّ اللّهَ جَميلٌ يُحِبُّ الْجَمالَ',qf:'خداوند زیباست و زیبایی را دوست دارد. (رسول خدا ص)',
+ text:['عِنْدَما رَجَعَ رَسولُ اللّهِ مِنْ إِحْدى الْغَزَواتِ، اِسْتَقْبَلَهُ أَحَدُ أَصْحابِهِ بِاسْمِ «سَعْدٍ الْأَنْصاري»، فَصافَحَهُ النَّبِيُّ وَ وَجَدَ يَدَهُ خَشِنَةً؛ ثُمَّ سَأَلَهُ: لِماذا يَدُكَ هكَذا؟','أَجابَ: يا رَسولَ اللّهِ، أَشْتَغِلُ في الْمَزْرَعَةِ مِنَ الصَّباحِ حَتّى اللَّيْلِ لِنَفَقَةِ أَهْلي. فَقَبَّلَ رَسولُ اللّهِ يَدَهُ وَ قالَ: «هذِهِ يَدٌ لا تَمَسُّها النّارُ أَبَداً».'],
+ tr:'وقتی پیامبر از یکی از جنگ‌ها برگشت، یکی از یارانش به نام «سعد انصاری» به استقبالش آمد. پیامبر با او دست داد و دستش را زبر یافت و پرسید: چرا دستت این‌گونه است؟ پاسخ داد: ای رسول خدا، از صبح تا شب در مزرعه کار می‌کنم تا خرج خانواده‌ام را تأمین کنم. پیامبر دست او را بوسید و فرمود: «این دستی است که آتش هرگز آن را لمس نمی‌کند».',
+ g:'<b>افعالی با ماضی سوم‌شخص مفرد بیش از سه حرف:</b> ۴ وزن را با مضارع و مصدر حفظ کنید.<br>شناسه‌ها در ماضی: «ـتُ» = انجام دادم، «ـتَ» = دادی، «ـَ» = داد، «ـنا» = دادیم، «ـتُمْ» = دادید، «ـوا» = دادند. در مضارع: «أ» (من)، «تـ» (تو)، «يـ» (او)، «نـ» (ما)، «تـ…ونَ» (شما)، «يـ…ونَ» (آنان).<br>تمرین وزن‌ها در تب «صرف».'},
+{t:'هذا خَلْقُ اللّهِ',f:'این آفرینش خداست',q:'﴿قُلْ سيروا فِي الْأَرْضِ فَانْظُروا كَيْفَ بَدَأَ الْخَلْقَ﴾',qf:'بگو در زمین بگردید و بنگرید چگونه [خداوند] آفرینش را آغاز کرد. (عنکبوت ۲۰)',
+ text:['في أَعْماقِ الْبَحْرِ تُوجَدُ أَسْماكٌ مُضيئَةٌ. وَ أَضواؤُها صادِرَةٌ عَنْ نَوْعٍ مِنَ الْبَكْتيرْيا الْمُضيئَةِ الَّتي تَعيشُ تَحْتَ عُيونِ تِلْكَ الْأَسْماكِ.','تَسْتَطيعُ الْحِرْباءُ أَنْ تُديرَ عَيْنَيْها في اتِّجاهاتٍ مُخْتَلِفَةٍ دونَ أَنْ تُحَرِّكَ رَأْسَها، وَ هِيَ تَسْتَطيعُ أَنْ تَرى في اتِّجاهَيْنِ في وَقْتٍ واحِدٍ.','لا تَتَحَرَّكُ عَيْنُ الْبومَةِ، فَإِنَّها ثابِتَةٌ، وَ لكِنَّها تُعَوِّضُ هذَا النَّقْصَ بِتَحْريكِ رَأْسِها في كُلِّ جِهَةٍ، وَ تَسْتَطيعُ أَنْ تُديرَ رَأْسَها مِئَتَيْنِ وَ سَبْعينَ دَرَجَةً دونَ أَنْ تُحَرِّكَ جِسْمَها.'],
+ tr:'در اعماق دریا ماهی‌های نورانی هستند و نورشان از نوعی باکتری نورانی است که زیر چشم‌های آن ماهی‌ها زندگی می‌کند. آفتاب‌پرست می‌تواند بدون حرکت دادن سر، چشمانش را در جهت‌های مختلف بچرخاند و هم‌زمان در دو جهت ببیند. چشم جغد حرکت نمی‌کند و ثابت است، اما این کاستی را با چرخاندن سرش جبران می‌کند: سر خود را ۲۷۰ درجه، بدون حرکت دادن بدن، می‌چرخاند. (متن کامل درس شامل جانوران دیگر نیز هست.)',
+ g:'<b>چهار وزن دیگر:</b> تَفاعَلَ، فَعَّلَ، فاعَلَ، أَفْعَلَ. مثال‌ها: تَعارَفَ (آشنا شد)، فَتَّشَ (بازرسی کرد)، جاهَدَ (کوشید)، أَحْسَنَ (نیکی کرد). مصدرها را در تب «صرف» ببینید.'}
+];
+var DLG=[
+{t:'التَّعارُفُ (در فرودگاه)',l:['صَباحَ الْخَيْرِ يا أَخي.','صَباحَ النّورِ وَ السُّرورِ.','كَيْفَ حالُكَ؟','أَنَا بِخَيْرٍ، وَ كَيْفَ أَنْتَ؟','بِخَيْرٍ وَ الْحَمْدُ لِلّهِ.','مِنْ أَيْنَ أَنْتَ؟','أَنَا مِنْ إيرانَ.','ما اسْمُكَ الْكَريمُ؟','اِسْمي حُسْني، وَ ما اسْمُكَ الْكَريمُ؟','اِسْمي سَعيدٌ.','هَلْ سافَرْتَ إِلى إيرانَ حَتَّى الْآنَ؟','لا؛ مَعَ الْأَسَفِ. أُحِبُّ السَّفَرَ.','إِنْ شاءَ اللّهُ تُسافِرُ إِلى إيرانَ!','في أَمانِ اللّهِ.','إِنْ شاءَ اللّهُ؛ إِلَى اللِّقاءِ.']},
+{t:'في صالَةِ التَّفْتيشِ بِالْجَمارِكِ',l:['اِجْلِبْ هذِهِ الْحَقيبَةَ.','عَلى عَيْنَيَّ، وَ لكِنْ ما هِيَ الْمُشْكِلَةُ؟','تَفْتيشٌ بَسيطٌ.','لا بَأْسَ.','لِمَنْ هذِهِ الْحَقيبَةُ؟','لِأُسْرَتي.','مِنْ فَضْلِكَ، اِفْتَحْها.','حَقيبَتي مَفْتوحَةٌ، تَفَضَّلْ.','ما هذِهِ الْحُبوبُ؟','حُبوبٌ مُهَدِّئَةٌ، عِنْدي صُداعٌ.','هَلْ عِنْدَكَ وَصْفَةُ الطَّبيبِ؟','نَعَمْ؛ تَفَضَّلْ.','حَسَناً. شُكراً.']}
+];
+var V=[
+['تَعَب','خستگی',1],['خَسِرَ','زیان کرد',1],['رِسالَة','پیام، نامه',1],['كَدُّ يَدِهِ','دسترنج',1],['كَسول','تنبل (≠ نَشيط)',1],['نَشيط','فعال',1],['مَصاريف','هزینه‌ها (مفرد: مَصْروف)',1],['بِأَيِّ طَريقٍ','از هر راهی',1],
+['أَتْقَنَ','درست و استوار انجام داد',2],['أَجْلَسَ','نشاند',2],['أَحَلّ','حلال‌تر',2],['أَطْيَب','خوب‌تر',2],['أَسْمَر','گندمگون',2],['اِغْرِسوا','نهال بکارید',2],['تُبَيِّنُ','آشکار می‌کند',2],['ذو','دارای',2],['رَحَّبَ بِهِ','به او خوشامد گفت',2],['كَسَل','تنبلی (≠ نَشاط)',2],['نُجْح','موفقیت (= نَجاح)',2],['يَسْتَهْزِئُ بِهِ','او را ریشخند می‌کند',2],
+['أَهْل','خانواده',3],['اِسْتَقْبَلَ','به پیشواز رفت',3],['حَتّى','تا (= إِلى)',3],['صافَحَ','دست داد',3],['غَزَوات','جنگ‌ها (مفرد: غَزْوَة)',3],['قَبَّلَ','بوسید',3],['لا تَمَسُّ','لمس نمی‌کند',3],['حِلْم','شکیبایی (= صَبْر)',3],['قِلَّة','تنگدستی، کمی',3],['بِطاقَة','کارت، بلیت',3],['جَوازُ السَّفَرِ','گذرنامه',3],['جاهِز','آماده',3],['مَطار','فرودگاه',3],['قاعَة','سالن',3],['سائِح','گردشگر',3],
+['اِتِّجاهات','جهت‌ها (مفرد: اِتِّجاه)',4],['تَمْلِكُ','دارد، برخوردار است',4],['اِسْتَطاعَ','توانست (= قَدَرَ)',4],['حِرْباء','آفتاب‌پرست',4],['بومَة','جغد',4],['أَعْشاب','گیاهان',4],['مُضيء','نورانی',4],['وِقايَة','پیشگیری',4],['دَلَّ','راهنمایی کرد',4],['بُحَيْرَة','دریاچه',4],['كَهْف','غار',4],['تَفْتيش','بازرسی',4],['جَمارِك','گمرک',4]
+];
+var Q=[
+['چرا ناصر احساس خستگی کرد؟',['چون تنبل بود','چون پولش را از دست داد','چون زیاد کار کرد'],2],
+['راننده تاکسی در درس اول کیست؟',['صادق','ناصر','مسافران'],1],
+['خداوند به چه کسی با رحمت نگاه می‌کند؟',['کسی که ثروت زیاد دارد','کسی که کار کرد و از دسترنج خود خورد','کسی که سفر را دوست دارد'],1],
+['«كَسول» یعنی؟',['تنبل','فعال','خسته'],0],
+['«اِغْرِسوا» یعنی؟',['درو کنید','نهال بکارید','آب دهید'],1],
+['شغل مردی که بر پیامبر وارد شد چه بود؟',['کشاورز','تاجر','سرباز'],0],
+['«إِنَّها يَدٌ يُحِبُّها اللّهُ وَ رَسولُهُ» یعنی؟',['این دستی است که خدا و رسولش دوستش دارند','این دست کار نکرده است','خدا این دست را رحمت کند'],0],
+['«خَمْسَةَ عَشَرَ» کدام عدد است؟',['۵','۱۵','۵۰'],1],
+['«ثَلاثونَ» کدام عدد است؟',['۳','۱۳','۳۰'],2],
+['سعد انصاری چه کار می‌کرد؟',['در مزرعه کار می‌کرد','سرباز بود','بازرگان بود'],0],
+['پیامبر با دست خشن او چه کرد؟',['آن را بوسید','کنارش گذاشت','نادیده گرفت'],0],
+['مصدر «اِسْتَغْفَرَ» کدام است؟',['اِسْتِغْفار','اِغْتِفار','تَغْفير'],0],
+['«اِشْتَغَلوا» یعنی؟',['کار کردند','کار می‌کنند','کار کن'],0],
+['«اِنْسَحَبَ» یعنی؟',['عقب‌نشینی کرد','باز شد','لبخند زد'],0],
+['درست یا نادرست: آفتاب‌پرست می‌تواند چشمانش را در جهت‌های مختلف بچرخاند.',['درست','نادرست'],0],
+['جغد سر خود را چند درجه می‌چرخاند؟',['۱۸۰','۲۷۰','۳۶۰'],1],
+['ماهی‌های نورانی کجا زندگی می‌کنند؟',['در اعماق دریا','نزدیک سطح آب','در رودخانه'],0],
+['مصدر «فَرَّحَ» کدام است؟',['تَفْريح','تَفَرُّح','إِفْراح'],0],
+['مصدر «أَخْرَجَ» کدام است؟',['إِخْراج','تَخْريج','خُروج'],0],
+['مصدر «تَفاعَلَ» کدام است؟',['تَفاعُل','تَفْعيل','مُفاعَلَة'],0]
+];
+var FORMS=[['اِسْتَفْعَلَ','يَسْتَفْعِلُ','اِسْتِفْعال'],['اِفْتَعَلَ','يَفْتَعِلُ','اِفْتِعال'],['اِنْفَعَلَ','يَنْفَعِلُ','اِنْفِعال'],['تَفَعَّلَ','يَتَفَعَّلُ','تَفَعُّل'],['تَفاعَلَ','يَتَفاعَلُ','تَفاعُل'],['فَعَّلَ','يُفَعِّلُ','تَفْعيل'],['فاعَلَ','يُفاعِلُ','مُفاعَلَة'],['أَفْعَلَ','يُفْعِلُ','إِفْعال']];
+var PR=[
+['مفرد مذکر غایب','هُوَ','فَعَلَ','يَفْعُلُ'],['مثنی مذکر غایب','هُما','فَعَلا','يَفْعُلانِ'],['جمع مذکر غایب','هُمْ','فَعَلوا','يَفْعُلونَ'],
+['مفرد مؤنث غایب','هِيَ','فَعَلَتْ','تَفْعُلُ'],['مثنی مؤنث غایب','هُما','فَعَلَتا','تَفْعُلانِ'],['جمع مؤنث غایب','هُنَّ','فَعَلْنَ','يَفْعُلْنَ'],
+['مفرد مذکر مخاطب','أَنْتَ','فَعَلْتَ','تَفْعُلُ','افْعُلْ'],['مثنی مذکر مخاطب','أَنْتُما','فَعَلْتُما','تَفْعُلانِ','افْعُلا'],['جمع مذکر مخاطب','أَنْتُمْ','فَعَلْتُمْ','تَفْعُلونَ','افْعُلوا'],
+['مفرد مؤنث مخاطب','أَنْتِ','فَعَلْتِ','تَفْعُلينَ','افْعُلي'],['مثنی مؤنث مخاطب','أَنْتُما','فَعَلْتُما','تَفْعُلانِ','افْعُلا'],['جمع مؤنث مخاطب','أَنْتُنَّ','فَعَلْتُنَّ','تَفْعُلْنَ','افْعُلْنَ'],
+['متکلم وحده','أَنَا','فَعَلْتُ','أَفْعُلُ'],['متکلم مع الغیر','نَحْنُ','فَعَلْنا','نَفْعُلُ']];
+var UN=['','وَاحِد','اثْنانِ','ثَلاثَة','أَرْبَعَة','خَمْسَة','سِتَّة','سَبْعَة','ثَمانِيَة','تِسْعَة','عَشَرَة'];
+var TEEN=['أَحَدَ عَشَرَ','اثْنا عَشَرَ','ثَلاثَةَ عَشَرَ','أَرْبَعَةَ عَشَرَ','خَمْسَةَ عَشَرَ','سِتَّةَ عَشَرَ','سَبْعَةَ عَشَرَ','ثَمانِيَةَ عَشَرَ','تِسْعَةَ عَشَرَ'];
+var TENS=['عِشْرونَ','ثَلاثونَ','أَرْبَعونَ','خَمْسونَ','سِتّونَ','سَبْعونَ','ثَمانونَ','تِسْعونَ'];
+var ORD=['الْأَوَّل','الثّاني','الثّالِث','الرّابِع','الخامِس','السّادِس','السّابِع','الثّامِن','التّاسِع','العاشِر'];
+
+/* ---------- توابع خالص ---------- */
+function numWord(n){
+ if(n<1||n>100||n%1)return '';
+ if(n<=10)return UN[n];
+ if(n<20)return TEEN[n-11];
+ if(n===100)return 'مِئَة';
+ if(n%10===0)return TENS[n/10-2];
+ return UN[n%10]+' وَ '+TENS[Math.floor(n/10)-2];
+}
+function ordWord(n){
+ if(n<=10)return ORD[n-1];
+ if(n===11)return 'الْحادي عَشَرَ';
+ if(n===20)return 'الْعِشْرون';
+ return ORD[n-11]+' عَشَرَ';
+}
+function conj(p,r){var m={'ف':r[0],'ع':r[1],'ل':r[2]};return p.replace(/[فعل]/g,function(c){return m[c]})}
+function cleanRoot(s){return String(s).replace(/[\u064B-\u0652\u0670\s]/g,'')}
+function validRoot(s){return /^[\u0621-\u064A]{3}$/.test(s)}
+
+/* ---------- نماها ---------- */
+var NAV=[['home','خانه'],['l0','درس ۱'],['l1','درس ۲'],['l2','درس ۳'],['l3','درس ۴'],['num','اعداد'],['verb','صرف'],['vocab','واژگان'],['quiz','آزمون']];
+var S={v:'home',fc:{i:0,flip:false,deck:null,onlyNew:false},qz:null,root:'فعل'};
+var known=store.get('arab10.known',{});
+var best=store.get('arab10.best',0);
+
+function nav(){
+ $('#nav').innerHTML=NAV.map(function(x){return '<button data-v="'+x[0]+'"'+(S.v===x[0]?' class="on" aria-current="page"':'')+'>'+x[1]+'</button>'}).join('');
+}
+function vocabTable(list){
+ return '<div class="tw"><table><thead><tr><th>عربی</th><th>فارسی</th></tr></thead><tbody>'+list.map(function(w){return '<tr><td class="ar">'+w[0]+'</td><td>'+esc(w[1])+'</td></tr>'}).join('')+'</tbody></table></div>';
+}
+function home(){
+ var kc=Object.keys(known).length;
+ return '<section class="hero"><p class="ar">حِرْفَةُ الْمَرْءِ كَنْزٌ</p><p>پیشهٔ انسان گنج است.</p><h1>عربی، زبان قرآن ۱ — پایهٔ دهم</h1><p class="muted">شاخهٔ فنی‌وحرفه‌ای و کاردانش · اجرای آزمایشی · آموزش تعاملی بر پایهٔ کتاب درسی</p></section>'+
+ '<div class="grid">'+L.map(function(x,i){return '<button class="tile" data-v="l'+i+'"><b>درس '+fa(i+1)+'</b><span class="ar" style="font-size:1.2rem">'+x.t+'</span><br><span class="muted">'+x.f+'</span></button>'}).join('')+'</div>'+
+ '<div class="grid" style="margin-top:10px"><button class="tile" data-v="num"><b>اعداد ۱ تا ۱۰۰</b><span class="muted">تبدیل عدد به عربی و ترتیبی ۱ تا ۲۰</span></button><button class="tile" data-v="verb"><b>آزمایشگاه صرف</b><span class="muted">صرف ۱۴ صیغه و ۸ وزن با ریشهٔ دلخواه</span></button><button class="tile" data-v="vocab"><b>واژگان و فلش‌کارت</b><span class="muted">'+fa(V.length)+' واژه</span></button><button class="tile" data-v="quiz"><b>آزمون</b><span class="muted">'+fa(Q.length)+' پرسش با پاسخ فوری</span></button></div>'+
+ '<div class="card"><h2>پیشرفت شما</h2><p>واژه‌های یادگرفته‌شده: '+fa(kc)+' از '+fa(V.length)+'</p><div class="bar"><i style="width:'+Math.round(kc/V.length*100)+'%"></i></div><p>بهترین نتیجهٔ آزمون: '+fa(best)+' از '+fa(Q.length)+'</p></div>'+
+ '<div class="card"><h2>شیوهٔ مطالعه</h2><p>هر درس را بخوانید، واژه‌ها را با فلش‌کارت مرور کنید، وزن‌ها را در تب «صرف» تمرین کنید و در پایان آزمون بدهید. هدف کتاب، <b>فهم متن</b> است؛ بنابراین ابتدا متن را خودتان ترجمه کنید و بعد با ترجمهٔ پیشنهادی مقایسه کنید.</p></div>';
+}
+function lesson(i){
+ var x=L[i],words=V.filter(function(w){return w[2]===i+1});
+ var out='<div class="card"><h2>درس '+fa(i+1)+': '+x.f+'</h2><p class="ar" style="color:var(--gold)">'+x.q+'</p><p class="muted">'+esc(x.qf)+'</p></div>';
+ out+='<div class="card"><h2>متن درس</h2>'+x.text.map(function(p){return '<p class="ar">'+p+'</p>'}).join('')+'<details><summary>نمایش ترجمهٔ فارسی (پس از ترجمهٔ خودتان)</summary><p>'+esc(x.tr)+'</p></details></div>';
+ out+='<div class="card"><h2>واژگان درس</h2>'+vocabTable(words)+'</div><div class="card"><h2>قواعد</h2><p>'+x.g+'</p></div>';
+ if(i===0||i===3){var d=DLG[i===0?0:1];out+='<div class="card"><h2>گفت‌وگو: <span class="ar" style="font-size:1.3rem">'+d.t+'</span></h2>'+d.l.map(function(s,k){return '<p class="ar" style="margin:0;padding-right:'+(k%2?'28':'0')+'px">'+s+'</p>'}).join('')+'<p class="muted">با هم‌کلاسی‌تان نقش‌ها را عوض کنید و گفت‌وگو را اجرا کنید.</p></div>'}
+ return out;
+}
+function numbers(){
+ var t1='<div class="tw"><table><tbody><tr><th>۱–۱۰</th>'+UN.slice(1).map(function(w,k){return '<td class="ar">'+fa(k+1)+' '+w+'</td>'}).join('')+'</tr></tbody></table></div>';
+ var t2='<div class="tw"><table><thead><tr><th>عدد</th><th>عربی</th></tr></thead><tbody>'+TEEN.map(function(w,k){return '<tr><td>'+fa(k+11)+'</td><td class="ar">'+w+'</td></tr>'}).join('')+TENS.map(function(w,k){return '<tr><td>'+fa((k+2)*10)+'</td><td class="ar">'+w+'</td></tr>'}).join('')+'<tr><td>۱۰۰</td><td class="ar">مِئَة</td></tr></tbody></table></div>';
+ var o=[];for(var n=1;n<=20;n++)o.push('<tr><td>'+fa(n)+'م</td><td class="ar">'+ordWord(n)+'</td></tr>');
+ return '<div class="card"><h2>تبدیل عدد</h2><label for="numIn">عددی از ۱ تا ۱۰۰ بنویسید:</label><br><input id="numIn" type="text" inputmode="numeric" autocomplete="off" value="25"><p id="numOut" class="ar" aria-live="polite">'+numWord(25)+'</p><p class="muted">قاعده: برای ۲۱ تا ۹۹، یکان + «وَ» + دهگان؛ مثل «خَمْسَة وَ عِشْرونَ».</p></div>'+
+ '<div class="card"><h2>اعداد اصلی</h2>'+t1+t2+'</div><div class="card"><h2>اعداد ترتیبی ۱ تا ۲۰</h2><div class="tw"><table><tbody>'+o.join('')+'</tbody></table></div></div>';
+}
+function verbTables(r){
+ var a='<div class="tw"><table><thead><tr><th>#</th><th>صیغه</th><th>ضمیر</th><th>ماضی</th><th>مضارع</th><th>امر / نهی</th></tr></thead><tbody>'+PR.map(function(p,k){
+  var im=p[4]?conj(p[4],r)+' / لا '+conj(p[4],r):'—';
+  return '<tr><td>'+fa(k+1)+'</td><td>'+p[0]+'</td><td class="ar">'+p[1]+'</td><td class="ar">'+conj(p[2],r)+'</td><td class="ar">'+conj(p[3],r)+'</td><td class="ar">'+im+'</td></tr>'}).join('')+'</tbody></table></div>';
+ var b='<div class="tw"><table><thead><tr><th>ماضی</th><th>مضارع</th><th>مصدر</th></tr></thead><tbody>'+FORMS.map(function(f){return '<tr><td class="ar">'+conj(f[0],r)+'</td><td class="ar">'+conj(f[1],r)+'</td><td class="ar">'+conj(f[2],r)+'</td></tr>'}).join('')+'</tbody></table></div>';
+ return '<h3>۱۴ صیغه (وزن فَعَلَ – يَفْعُلُ)</h3>'+a+'<h3>۸ وزن با مصدر</h3>'+b;
+}
+function verbs(){
+ return '<div class="card"><h2>آزمایشگاه صرف</h2><label for="rootIn">ریشهٔ سه‌حرفی (مثل «كتب» یا «نصر»):</label><br><input id="rootIn" type="text" autocomplete="off" value="'+S.root+'" lang="ar" dir="rtl"><p class="muted">برای ریشه‌های سالم درست است؛ در ریشه‌های معتل و مضاعف تغییرات صرفی پیچیده‌تری رخ می‌دهد که از اهداف کتاب نیست. با «فعل» خودِ وزن‌ها را می‌بینید.</p><div id="verbOut">'+verbTables(S.root)+'</div></div>';
+}
+function vocabView(){
+ var d=S.fc.deck||(S.fc.deck=V.map(function(_,i){return i}));
+ return '<div class="card"><h2>فلش‌کارت</h2><div id="fcBox"></div></div><div class="card"><h2>فهرست واژگان</h2><input id="vSearch" type="search" placeholder="جست‌وجو (عربی یا فارسی)" aria-label="جست‌وجوی واژه"><div id="vList">'+vocabTable(V)+'</div></div>';
+}
+function drawFc(){
+ var box=$('#fcBox');if(!box)return;
+ var f=S.fc,d=f.deck.filter(function(i){return !f.onlyNew||!known[i]});
+ if(!d.length){box.innerHTML='<p>همهٔ واژه‌ها را یاد گرفته‌اید. 🎉</p><button class="btn alt" data-a="fcAll">نمایش همه</button>';return}
+ if(f.i>=d.length)f.i=0;
+ var id=d[f.i],w=V[id];
+ box.innerHTML='<div class="fc" role="button" tabindex="0" data-a="flip" aria-label="برگرداندن کارت">'+(f.flip?'<span>'+esc(w[1])+'</span>':'<span class="ar">'+w[0]+'</span>')+'</div>'+
+ '<p class="muted">کارت '+fa(f.i+1)+' از '+fa(d.length)+' · درس '+fa(w[2])+(known[id]?' · ✔ یادگرفته':'')+'</p>'+
+ '<div class="row"><button class="btn alt" data-a="prev">قبلی</button><button class="btn" data-a="next">بعدی</button><button class="btn alt" data-a="know">'+(known[id]?'هنوز یاد نگرفته‌ام':'یاد گرفتم')+'</button><button class="btn alt" data-a="shuffle">درهم</button><button class="btn alt" data-a="onlyNew">'+(f.onlyNew?'نمایش همه':'فقط ناآموخته‌ها')+'</button></div>';
+}
+function quiz(){
+ var z=S.qz;
+ if(!z){return '<div class="card"><h2>آزمون</h2><p>'+fa(Q.length)+' پرسش از متن‌ها، واژگان و قواعد چهار درس. پس از هر پاسخ، درست یا نادرست‌بودن آن نمایش داده می‌شود.</p><button class="btn" data-a="qstart">شروع آزمون</button><p class="muted">بهترین نتیجه: '+fa(best)+' از '+fa(Q.length)+'</p></div>'}
+ if(z.i>=z.o.length){
+  var pct=Math.round(z.s/z.o.length*100);
+  return '<div class="card"><h2>پایان آزمون</h2><p style="font-size:1.4rem">'+fa(z.s)+' از '+fa(z.o.length)+' ('+fa(pct)+'٪)</p><p>'+(pct>=80?'عالی است! آمادهٔ ادامه‌اید.':pct>=50?'خوب است؛ درس‌های مربوط به پاسخ‌های نادرست را دوباره بخوانید.':'متن درس‌ها و واژگان را دوباره مرور کنید و آزمون را تکرار کنید.')+'</p><button class="btn" data-a="qstart">آزمون دوباره</button></div>';
+ }
+ var q=Q[z.o[z.i]];
+ return '<div class="card"><div class="bar"><i style="width:'+Math.round(z.i/z.o.length*100)+'%"></i></div><p class="muted">پرسش '+fa(z.i+1)+' از '+fa(z.o.length)+' · امتیاز: '+fa(z.s)+'</p><h2 style="color:inherit">'+q[0]+'</h2>'+
+ q[1].map(function(o,k){var c='opt';if(z.sel!==null){if(k===q[2])c+=' ok';else if(k===z.sel)c+=' bad'}return '<button class="'+c+'" data-a="opt" data-k="'+k+'"'+(z.sel!==null?' disabled':'')+'>'+o+'</button>'}).join('')+
+ (z.sel!==null?'<p aria-live="polite"><b>'+(z.sel===q[2]?'✔ درست':'✘ نادرست — پاسخ درست: '+q[1][q[2]])+'</b></p><button class="btn" data-a="qnext">'+(z.i+1===z.o.length?'پایان':'پرسش بعدی')+'</button>':'')+'</div>';
+}
+function render(){
+ nav();
+ var v=S.v,h;
+ if(v==='home')h=home();else if(v.charAt(0)==='l')h=lesson(+v.charAt(1));else if(v==='num')h=numbers();else if(v==='verb')h=verbs();else if(v==='vocab')h=vocabView();else h=quiz();
+ $('#app').innerHTML=h;
+ if(v==='vocab')drawFc();
+}
+function go(v){S.v=v;render();window.scrollTo(0,0)}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+
+/* ---------- رویدادها ---------- */
+document.addEventListener('click',function(e){
+ var t=e.target.closest('[data-v],[data-a]');if(!t)return;
+ if(t.dataset.v){go(t.dataset.v);return}
+ var a=t.dataset.a,f=S.fc;
+ if(a==='flip'){f.flip=!f.flip;drawFc()}
+ else if(a==='next'||a==='prev'){var n=f.deck.filter(function(i){return !f.onlyNew||!known[i]}).length;f.i=a==='next'?(f.i+1)%n:(f.i-1+n)%n;f.flip=false;drawFc()}
+ else if(a==='know'){var d=f.deck.filter(function(i){return !f.onlyNew||!known[i]}),id=d[f.i];if(known[id])delete known[id];else known[id]=1;store.set('arab10.known',known);if(f.onlyNew&&known[id]&&f.i>=d.length-1)f.i=0;f.flip=false;drawFc()}
+ else if(a==='shuffle'){shuffle(f.deck);f.i=0;f.flip=false;drawFc()}
+ else if(a==='onlyNew'||a==='fcAll'){f.onlyNew=a==='onlyNew'&&!f.onlyNew;f.i=0;f.flip=false;drawFc()}
+ else if(a==='qstart'){S.qz={o:shuffle(Q.map(function(_,i){return i})),i:0,s:0,sel:null};render()}
+ else if(a==='opt'&&S.qz&&S.qz.sel===null){var k=+t.dataset.k,q=Q[S.qz.o[S.qz.i]];S.qz.sel=k;if(k===q[2])S.qz.s++;render()}
+ else if(a==='qnext'&&S.qz){S.qz.i++;S.qz.sel=null;if(S.qz.i>=S.qz.o.length&&S.qz.s>best){best=S.qz.s;store.set('arab10.best',best)}render();window.scrollTo(0,0)}
+});
+document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.dataset&&e.target.dataset.a==='flip'){e.preventDefault();e.target.click()}});
+document.addEventListener('input',function(e){
+ var id=e.target.id,v=e.target.value;
+ if(id==='numIn'){var n=parseInt(v.replace(/[۰-۹]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}),10);$('#numOut').textContent=(n>=1&&n<=100)?numWord(n):'عددی از ۱ تا ۱۰۰ وارد کنید.'}
+ else if(id==='rootIn'){var r=cleanRoot(v);$('#verbOut').innerHTML=validRoot(r)?(S.root=r,verbTables(r)):'<p>فقط سه حرف عربی وارد کنید؛ مثلاً: كتب</p>'}
+ else if(id==='vSearch'){var s=v.trim().toLowerCase(),c=cleanRoot(v);var list=V.filter(function(w){return !s||w[1].toLowerCase().indexOf(s)>-1||cleanRoot(w[0]).indexOf(c)>-1});$('#vList').innerHTML=list.length?vocabTable(list):'<p>واژه‌ای پیدا نشد.</p>'}
+});
+render();
+
+/* ---------- PWA ---------- */
+var dp=null,ib=$('#inst');
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;ib.hidden=false});
+ib.addEventListener('click',function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;ib.hidden=true})});
+window.addEventListener('appinstalled',function(){dp=null;ib.hidden=true});
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
+})();
+</script>
+</body>
+</html>
